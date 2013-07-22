@@ -5,7 +5,8 @@ Puppet::Type.type(:npackd_pkg).provide(:npackd) do
 
   include PuppetX::Badgerious::Npackd::ProviderCommon
 
-  # resources will normally run even if prefetch fails. Don't want that to happen here. 
+  # resources will normally run even if prefetch fails. Don't want that to happen here,
+  # so we'll have the instances check this before running.
   @prefetch_ok = true
   class << self
     attr_reader :prefetch_ok

@@ -5,12 +5,13 @@ Puppet::Type.newtype(:npackd_pkg) do
   #
   # 'name' must be unique across versions of the same package for provider
   # prefetch to work (the parameter that is passed to prefetch is a hash of the
-  # form { name => resource }, so 'name' needs to be of the form "{pkg} {version}".
-  # (we can't use title_patterns here to just split into name and version,
-  # since this would still produce resources with identical names; prefetch
-  # ignores other namevars and uses exclusively 'name').  The :pkg_name param
-  # is just "{pkg}". If the user doesn't specify multiple versions, :pkg_name
-  # and :name may be the same thing.
+  # form { name => resource }, so in order to allow multiple versions to be
+  # installed at the same time, 'name' needs to be of the form "{pkg} {version}".
+  # (can't use title_patterns here to just split into name and version, since
+  # this would still produce resources with identical names; prefetch ignores
+  # other namevars and uses exclusively 'name').  The :pkg_name param is just
+  # "{pkg}". If the user doesn't specify the version in the title, :pkg_name
+  # and :name will be the same thing.
 
   self::IDENT = proc { |x| x }
 
