@@ -2,12 +2,13 @@ Puppet Npackd
 =============
 
 This module implements a type/provider for
-[Npackd](http://code.google.com/p/windows-package-manager/).  The `npackd_pkg`
-type is similar to the built-in `package`, except that versions are handled
-slightly differently (want to be able to install and remove specific versions
-of packages, and have multiple versions installed together; the built-in
-`package` cannot uninstall specific versions, and requires the version to be
-part of the package name to install specific versions). 
+[Npackd](http://code.google.com/p/windows-package-manager/), a package manager
+for Windows. The `npackd_pkg` type is similar to the built-in `package`,
+except that versions are handled slightly differently (want to be able to
+install and remove specific versions of packages, and have multiple versions
+installed together; the built-in `package` cannot uninstall specific versions,
+and requires the version to be part of the package name to install specific
+versions). 
 
 See the [list of available packages](http://npackd.appspot.com/p). Each package listed there has an 'ID' 
 field; this is the package name to use (note that NpackdCL is case sensitive). You can also use
