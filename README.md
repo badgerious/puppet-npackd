@@ -16,6 +16,17 @@ field; this is the package name to use (note that NpackdCL is case sensitive). Y
 
 This module also includes a type (`npackd_repo`) for managing Npackd repositories. 
 
+Install
+=======
+
+Install from puppet forge:
+
+    puppet module install badgerious/npackd
+
+Install from github (do this in your modulepath):
+
+    git clone https://github.com/badgerious/puppet-npackd npackd
+
 Examples
 ========
 
