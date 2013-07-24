@@ -6,9 +6,7 @@ module ProviderCommon
     base.class_exec do
       confine :osfamily => :windows
       defaultfor :osfamily => :windows
-      confine :true => ENV.include?('NPACKD_CL')
-      # to_s in case ENV['NPACKD_CL'] is nil
-      commands :npackdcl => File.join(ENV['NPACKD_CL'].to_s, 'npackdcl.exe')
+      commands :npackdcl => File.join(ENV['ProgramFiles'], 'NpackdCL', 'npackdcl.exe')
     end
   end
 end
