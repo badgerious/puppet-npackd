@@ -1,14 +1,9 @@
 Puppet Npackd
 =============
 
-This module implements a type/provider for
+This module implements a package provider for
 [Npackd](http://code.google.com/p/windows-package-manager/), a package manager
-for Windows. The `npackd_pkg` type is similar to the built-in `package`,
-except that versions are handled slightly differently (want to be able to
-install and remove specific versions of packages, and have multiple versions
-installed together; the built-in `package` cannot uninstall specific versions,
-and requires the version to be part of the package name to install specific
-versions). 
+for Windows.
 
 See the [list of available packages](http://npackd.appspot.com/p). Each package listed there has an 'ID' 
 field; this is the package name to use (note that NpackdCL is case sensitive). You can also use
@@ -36,25 +31,39 @@ Managing Packages
 ```puppet
 
     # Install 7zip. This will install the latest version initially, and
-    # apply no updates as long as ANY version is found on the system, a la
-    # the standard package type. 
-    npackd_pkg { 'org.7-zip.SevenZIP': }
-
-    # Install latest WinSCP. This will always install the latest version
-    # available in the repositories (again, same as standard package). 
-    npackd_pkg { 'net.winscp.WinSCP':
-      ensure  => installed,
-      version => latest,
+    # apply no updates as long as any version is found on the system.
+    package { 'org.7-zip.SevenZIP': 
+      provider => npackd,
     }
 
-    # Install PuTTY 0.62. To install a specific version, title the resource
-    # "{pkg_name} {version}". While it is possible to specify the version with
-    # 'version => 0.62', the below format is necessary if you want to install multiple versions. 
-    npackd_pkg { 'uk.org.greenend.chiark.sgtatham.Putty 0.62': }
+    # Install latest WinSCP. This will always install the latest version
+    # available in the repositories.
+    package { 'net.winscp.WinSCP':
+      ensure   => latest,
+      provider => npackd,
+    }
+
+    # Install Firefox version 22. 
+    package { 'org.mozilla.Firefox':
+      ensure => 22,
+    }
+
+    # Install .NET runtime versions 4.5.50709.17929 and 4.0.30319.1. 
+    # To install multiple versions of the same package, title the resource
+    # "{package} {version}". This format cannot be used together with 
+    # ambigiously versioned resources (e.g. ensure => latest) with the same
+    # package name. 
+    package { 'com.microsoft.DotNetRedistributable 4.0.30319.1':
+      ensure => installed,
+    }
+    package { 'com.microsoft.DotNetRedistributable 4.5.50709.17929':
+      ensure => installed,
+    }
 
     # Remove ALL versions of PuTTY. If you specify a version, only that version will be removed. 
-    npackd_pkg { 'uk.org.greenend.chiark.sgtatham.Putty':
-      ensure => absent,
+    package { 'uk.org.greenend.chiark.sgtatham.Putty':
+      ensure   => absent,
+      provider => npackd,
     }
 
 ```
