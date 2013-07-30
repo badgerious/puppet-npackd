@@ -6,6 +6,7 @@ module ProviderCommon
     base.class_exec do
       confine :osfamily => :windows
       defaultfor :osfamily => :windows
+      # FIXME: this seems to cause weird errors. Specifically, "can't convert nil into String" (?)
       commands :npackdcl => File.join(ENV['ProgramFiles'], 'NpackdCL', 'npackdcl.exe')
     end
   end
