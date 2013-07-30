@@ -12,6 +12,11 @@ class npackd {
     ensure => latest,
   }
 
+  # Version in title and version from 'ensure' do not match. 
+  package { 'net.winscp.WinSCP 5.1.4':
+    ensure => '5.1.5',
+  }
+
   # Repo is not a valid URL
   npackd_repo { 'badrepo': }
 
