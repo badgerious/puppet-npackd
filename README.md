@@ -45,7 +45,8 @@ Managing Packages
 
     # Install Firefox version 22. 
     package { 'org.mozilla.Firefox':
-      ensure => 22,
+      ensure   => 22,
+      provider => npackd,
     }
 
     # Install .NET runtime versions 4.5.50709.17929 and 4.0.30319.1. 
@@ -54,13 +55,17 @@ Managing Packages
     # ambigiously versioned resources (e.g. ensure => latest) with the same
     # package name. 
     package { 'com.microsoft.DotNetRedistributable 4.0.30319.1':
-      ensure => installed,
+      ensure   => installed,
+      provider => npackd,
     }
     package { 'com.microsoft.DotNetRedistributable 4.5.50709.17929':
-      ensure => installed,
+      ensure   => installed,
+      provider => npackd,
     }
 
     # Remove ALL versions of PuTTY. If you specify a version, only that version will be removed. 
+    # If there are multiple versions installed, one will be removed each puppet run (not ideal,
+    # but will eventually get the job done). 
     package { 'uk.org.greenend.chiark.sgtatham.Putty':
       ensure   => absent,
       provider => npackd,
@@ -83,3 +88,8 @@ Managing Repos
     }
 
 ```
+
+Changes
+=======
+
+[Changelog](https://github.com/badgerious/puppet-npackd/blob/master/CHANGELOG.md)
