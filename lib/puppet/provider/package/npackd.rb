@@ -45,21 +45,20 @@ Puppet::Type.type(:package).provide(:npackd) do
       # store just the package name in 'description'
       resource[:description] = resource[:name].split[0]
 
-      # Version given in the name takes precedence
+      # Version given in the name takes precedence over version given with 'ensure => {version}'.
       if status = resource[:name].split[1]
         resource[:status] = status
+      end
+
+      case resource[:ensure]
+      when :installed, :present, :absent
+        # undef means any version
+        resource[:status] = :undef unless resource[:status]
       else
-        case resource[:ensure]
-        # if ensure => absent and there is no version in the resource name,
-        # we'll remove the latest version. Over several puppet runs, this will
-        # remove all versions.
-        when :latest, :absent
-          resource[:status] = :latest
-        when :installed, :present
-          # undef means any version
-          resource[:status] = :undef
+        if resource[:status] && resource[:status] != resource[:ensure]
+          warning "#{self.resource_type.name.capitalize}[#{resource[:name]}]: Bad 'ensure' value of '#{resource[:ensure]}' (because version '#{resource[:status]}' is already specified in resource title)"
+          @failed_prefetch << resource[:description]
         else
-          # numeric version was specified to 'ensure'
           resource[:status] = resource[:ensure]
         end
       end
@@ -133,31 +132,27 @@ Puppet::Type.type(:package).provide(:npackd) do
 
   def properties
     if self.class.failed_prefetch.include?(@resource[:description])
-      fail 'Skipping because prefetch failed.'
+      fail "Skipping because prefetch for package '#{resource[:description]}' failed."
     end
     @property_hash
   end
  
   def install
-    debug "Installing '#{@resource[:description]}'"
     args = ['add', "--package=#{@resource[:description]}"]
     args << "--version=#{@resource[:status]}" unless [:undef, :latest].include?(@resource[:status])
     npackdcl(*args)
   end
 
   def uninstall
-    # 'ensure => absent' will set status to :latest
     if @resource[:status] == :latest
       version = latest
     else
-      version = @resource[:status]
+      version = @property_hash[:status]
     end
-    debug "Removing '#{@resource[:description]}' version #{version}"
     npackdcl 'remove', "--package=#{@resource[:description]}", "--version=#{version}"
   end
 
   def update
-    debug "Updating '#{@resource[:description]}'"
     if @property_hash[:ensure] == :absent
       install
     else
