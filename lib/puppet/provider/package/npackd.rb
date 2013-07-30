@@ -144,12 +144,7 @@ Puppet::Type.type(:package).provide(:npackd) do
   end
 
   def uninstall
-    if @resource[:status] == :latest
-      version = latest
-    else
-      version = @property_hash[:status]
-    end
-    npackdcl 'remove', "--package=#{@resource[:description]}", "--version=#{version}"
+    npackdcl 'remove', "--package=#{@resource[:description]}", "--version=#{@property_hash[:status]}"
   end
 
   def update
