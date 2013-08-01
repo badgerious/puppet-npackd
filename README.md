@@ -52,7 +52,7 @@ Managing Packages
     # Install .NET runtime versions 4.5.50709.17929 and 4.0.30319.1. 
     # To install multiple versions of the same package, title the resource
     # "{package} {version}". This format cannot be used together with 
-    # ambigiously versioned resources (e.g. ensure => latest) with the same
+    # ambiguously versioned resources (e.g. ensure => latest) with the same
     # package name. 
     package { 'com.microsoft.DotNetRedistributable 4.0.30319.1':
       ensure   => installed,
