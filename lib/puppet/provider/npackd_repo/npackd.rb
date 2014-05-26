@@ -3,11 +3,21 @@ require 'puppetx/badgerious/npackd/providercommon'
 Puppet::Type.type(:npackd_repo).provide(:npackd) do
   include PuppetX::Badgerious::Npackd::ProviderCommon
 
-  def exists?
+  def self.get_repo_list
     raw_output = npackdcl 'list-repos'
     # repos are listed one per line after a blank line
     raw_output =~ /^$\n(.*)/m
-    repos = $1.split("\n")
+    $1.split("\n")
+  end
+
+  def self.instances
+    get_repo_list.map do |repo|
+      new(:name => repo, :repo => repo)
+    end
+  end
+
+  def exists?
+    repos = self.class.get_repo_list
     repos.each { |r| return true if r.downcase == @resource[:repo] }
     false
   end
@@ -28,6 +38,10 @@ Puppet::Type.type(:npackd_repo).provide(:npackd) do
 
   def detect
     debug "Reloading npackd repos"
-    npackdcl 'detect'
+    begin
+      npackdcl 'detect'
+    rescue => e
+      warning("Failed to reload npackd repos: #{e.message}")
+    end
   end
 end
