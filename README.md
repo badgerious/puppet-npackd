@@ -89,6 +89,12 @@ Managing Repos
 
 ```
 
+Npackd compatibility
+===================
+
+- Version 1.1.0 of this module is compatible with Npackd 1.18.7 (and potentially future versions).
+- Version 1.0.0 of this module is compatible with Npackd 1.17.9
+
 Changes
 =======
 
