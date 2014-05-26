@@ -130,6 +130,11 @@ Puppet::Type.type(:package).provide(:npackd) do
     packages
   end
 
+  # package type expects this method (normally inherited from package base class)
+  def validate_source(value)
+    true
+  end
+
   def properties
     if self.class.failed_prefetch.include?(@resource[:description])
       fail "Skipping because prefetch for package '#{resource[:description]}' failed."
