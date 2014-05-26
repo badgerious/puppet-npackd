@@ -163,7 +163,7 @@ Puppet::Type.type(:package).provide(:npackd) do
   def latest
     unless @latest
       raw_output = npackdcl 'info', "--package=#{@resource[:description]}"
-      @latest = raw_output.match(/^Versions: (.*)$/)[1].split(',')[-1].strip
+      @latest = raw_output.match(/^Versions: (.*)$/)[1].split(',')[0].strip
     end
     @latest
   end
