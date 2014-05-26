@@ -15,5 +15,8 @@ Puppet::Type.newtype(:npackd_repo) do
       uri = URI.parse(r)
       uri.is_a?(URI::HTTP) or fail "'repo' must be a valid url"
     end
+    munge do |val|
+      val.downcase
+    end
   end
 end
