@@ -1,7 +1,13 @@
 class npackd {
-  # Periodically update the repos. Repos will be updated
-  # automatically if a repo is added/removed.
-  include npackd::detect
+  # Uncomment to periodically update the repos. (Repos will be updated
+  # automatically any time a repo is added/removed, but otherwise
+  # will not update themselves).
+  # Note that, if you enable this and are installing npackd from
+  # scratch, it will fail on the first run because npackd is
+  # not yet in %PATH%. This is safe to ignore. You can also
+  # hard code the path to npackdcl.exe in to detect.pp if you want to avoid this.
+  #
+  # include npackd::detect
 
   # Install npackd, or, if already installed try to update.
   # (On older versions of puppet, updates must be done manually).
