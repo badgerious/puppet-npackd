@@ -1,3 +1,6 @@
+### v1.1.1
+* Minor change to metadata.json
+
 v1.1.0
 ------
 
