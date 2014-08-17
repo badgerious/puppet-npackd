@@ -89,11 +89,16 @@ Managing Repos
 
 ```
 
+Puppet compatibility
+====================
+
+Puppet 3.7 or greater requires 1.1.2 or greater of this module.
+
 Npackd compatibility
 ===================
 
-- Version 1.1.0 of this module is compatible with Npackd 1.18.7 (and potentially future versions).
-- Version 1.0.0 of this module is compatible with Npackd 1.17.9
+- Version >= 1.1.0 of this module is compatible with Npackd 1.18.7 (and potentially future versions).
+- Version <= 1.0.0 of this module is compatible with Npackd 1.17.9
 
 Changes
 =======

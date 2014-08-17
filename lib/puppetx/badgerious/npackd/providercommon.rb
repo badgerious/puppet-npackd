@@ -6,7 +6,9 @@ module ProviderCommon
     base.class_exec do
       confine :osfamily => :windows
       defaultfor :osfamily => :windows
-      commands :npackdcl => File.join(ENV['ProgramFiles'].to_s, 'NpackdCL', 'npackdcl.exe')
+      # On 32-bit Windows, there is no %ProgramFiles(x86)% variable.
+      progfiles = ENV['ProgramFiles(x86)'] || ENV['ProgramFiles']
+      commands :npackdcl => File.join(progfiles.to_s, 'NpackdCL', 'npackdcl.exe')
     end
   end
 end

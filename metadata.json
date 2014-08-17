@@ -1,6 +1,6 @@
 {
   "name": "badgerious-npackd",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "badgerious",
   "summary": "Manages Npackd (a package manager for Windows) packages.",
   "license": "Apache License, Version 2.0",
