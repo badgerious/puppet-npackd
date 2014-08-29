@@ -1,4 +1,4 @@
-### 1.1.2
+### v1.1.2
 - Updates for Puppet 3.7 / Ruby 64 bit
 
 ### v1.1.1
